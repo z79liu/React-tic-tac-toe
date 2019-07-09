@@ -12,10 +12,20 @@ export class Game extends Component {
       ]
     }
   }
+  jumpTo(step) {
+    this.setState({
+    turnCount: step,
+    xIsNext: (step % 2) === 0
+  })
+  }
   handleClick=(i)=>{
     const history = this.state.history.slice(0,this.state.turnCount+1);
     const current = history[history.length-1];
     const squares = current.squares.slice();
+    const winner = calcWinner(squares);
+    if(winner || squares[i] ){
+      return;
+    }
     squares[i] = this.state.xIsNext ? "X" : "O";
     this.setState({history: history.concat({
       squares:squares
@@ -27,11 +37,35 @@ export class Game extends Component {
   render() {
     const history = this.state.history
     const current = history[this.state.turnCount]
+    const winner = calcWinner(current.squares);
+    const moves = history.map((step,move)=> {
+      const desc = move ? 'Go to #' + move : " Begining of Game";
+      return (
+        <li key={move}>
+          <button onClickC={()=>this.jumpTP(move)}>
+            {desc}
+          </button>
+        </li>
+      )
+    });
+    let status;
+    if(winner){
+      status = "Winner is " + winner + "!!";
+    }else {
+      status = "Next move is" + (this.state.xIsNext ? " X" : " O");
+    }
     return (
       <div className="game">
         <div className="game-board">
           <Board onClick={(i)=>this.handleClick(i)}
           squares={current.squares}/>
+        </div>
+        <div className="game-info">
+          <h3> Game Status: </h3>
+          <div>{status}</div>
+          <br></br>
+          <h3> Moves History: </h3>
+          <div>{moves}</div>
         </div>
       </div>
     )

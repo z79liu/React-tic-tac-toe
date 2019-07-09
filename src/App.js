@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Game from './components/Game';
 
 class App extends Component {
   render() {
+    const style = {
+      textAlign: "center"
+    }
     return (
       <div className="App">
+        <h1 style={style}>Zeyu's React Tic-Tac-Toe</h1>
         <Game/>
       </div>
     );

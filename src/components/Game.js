@@ -14,8 +14,8 @@ export class Game extends Component {
   }
   jumpTo(step) {
     this.setState({
-    turnCount: step,
-    xIsNext: (step % 2) === 0
+      turnCount: step,
+      xIsNext: (step % 2) === 0
   })
   }
   handleClick=(i)=>{
@@ -42,7 +42,7 @@ export class Game extends Component {
       const desc = move ? 'Go to #' + move : " Begining of Game";
       return (
         <li key={move}>
-          <button onClickC={()=>this.jumpTP(move)}>
+          <button onClickC={()=>this.jumpTo(move)}>
             {desc}
           </button>
         </li>
